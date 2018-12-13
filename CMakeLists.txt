@@ -38,6 +38,7 @@ endif()
 # set(CMAKE_CXX_STANDARD 11)
 
 # Now simply link against gtest or gtest_main as needed. Eg
+include_directories(include)
 add_executable(unit_test test/unit_test.cc)
 target_link_libraries(unit_test gtest_main)
 add_test(NAME unit_test COMMAND unit_test)
