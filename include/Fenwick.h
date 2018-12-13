@@ -6,7 +6,7 @@ public:
   class Node;
 
   Fenwick() { }
-  Fenwick(int size);
+  Fenwick(int size) : size_(size) { };
 
   void resize(int size) {
     size_ = size;

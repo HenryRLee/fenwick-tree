@@ -1,6 +1,10 @@
 #include "gtest/gtest.h"
 #include "Fenwick.h"
 
-TEST(ConstructorTest, DefaultConstructorTest) {
+TEST(ConstructorTest, DefaultConstructor) {
   Fenwick<int> tree = Fenwick<int>();
+}
+
+TEST(ConstructorTest, ConstructorWithSize) {
+  Fenwick<int> tree = Fenwick<int>(10);
 }
