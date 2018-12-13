@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
+#include "Fenwick.h"
 
-TEST(test, test) {
-  ASSERT_EQ(0, 0);
+TEST(ConstructorTest, DefaultConstructorTest) {
+  Fenwick<int> tree = Fenwick<int>();
 }
-
