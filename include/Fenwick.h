@@ -6,9 +6,11 @@ public:
   class Node;
 
   Fenwick() { }
-  Fenwick(int size) : size_(size) { };
+  Fenwick(int size) { resize(size); };
 
   void resize(int size) {
+    data_.resize(size);
+    tree_.resize(size);
     size_ = size;
   }
 
@@ -34,8 +36,8 @@ public:
   };
 
 private:
-  std::vector<T> data;
-  std::vector<T> tree;
+  std::vector<T> data_;
+  std::vector<T> tree_;
 
   int size_;
 
