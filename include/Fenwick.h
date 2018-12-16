@@ -30,6 +30,8 @@ public:
     public:
       Node(Fenwick &tree, int idx) : tree_(tree), idx_(idx) { }
 
+      operator T() const { return tree_.data_[idx_]; }
+
     private:
       Fenwick &tree_;
       int idx_;
