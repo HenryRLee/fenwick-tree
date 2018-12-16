@@ -12,7 +12,7 @@ public:
     size_ = size;
   }
 
-  int size() {
+  int size () const {
     return size_;
   }
 
