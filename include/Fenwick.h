@@ -16,16 +16,21 @@ public:
     return size_;
   }
 
-  Node operator[] (int index) {
-    return Node(this, index);
+  Node operator[] (int idx) {
+    if (idx < 0 || idx >= size_) {
+      throw std::out_of_range("Fenwick: index out of range");
+    }
+
+    return Node(*this, idx);
   }
 
   class Node {
     public:
-      Node(Fenwick &tree, int index) : tree_(tree), index_(index) { }
+      Node(Fenwick &tree, int idx) : tree_(tree), idx_(idx) { }
+
     private:
       Fenwick &tree_;
-      int index_;
+      int idx_;
   };
 
 private:
