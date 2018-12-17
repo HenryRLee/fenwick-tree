@@ -30,13 +30,7 @@ public:
 
   value_type sum(int n) const;
 
-  Node operator[] (int idx) {
-    if (idx < 0 || idx >= size_) {
-      throw std::out_of_range("Fenwick: index out of range");
-    }
-
-    return Node(*this, idx);
-  }
+  Node operator[] (int idx) { return Node(*this, idx); }
 
 private:
   class Node {
