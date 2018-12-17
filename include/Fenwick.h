@@ -6,6 +6,9 @@ private:
   class Node;
 
 public:
+  typedef T value_type ;
+  typedef value_type & reference;
+  typedef const value_type & const_reference;
 
   Fenwick() { }
   Fenwick(int size) { resize(size); };
@@ -33,9 +36,9 @@ private:
     public:
       Node(Fenwick &tree, int idx) : tree_(tree), idx_(idx) { }
 
-      operator T() const { return tree_.data_[idx_]; }
+      operator value_type() const { return tree_.data_[idx_]; }
 
-      Node & operator+=(const T & delta) {
+      Node & operator+=(const_reference delta) {
         tree_.update(idx_, delta);
         return *this;
       }
@@ -45,26 +48,26 @@ private:
       const int idx_;
   };
 
-  std::vector<T> data_;
-  std::vector<T> tree_;
+  std::vector<value_type> data_;
+  std::vector<value_type> tree_;
 
   int size_;
 
-  void update(int idx, const T & delta);
-  void update_tree(int idx, const T & delta);
+  void update(int idx, const_reference delta);
+  void update_tree(int idx, const_reference delta);
 
   friend class Node;
 };
 
 template<class T>
-void Fenwick<T>::update(int idx, const T & delta) {
+void Fenwick<T>::update(int idx, const_reference delta) {
   data_[idx] += delta;
 
   update_tree(idx + 1, delta);
 }
 
 template<class T>
-void Fenwick<T>::update_tree(int idx, const T & delta) {
+void Fenwick<T>::update_tree(int idx, const_reference delta) {
   if (idx < 0 || idx >= size_) {
     return;
   }
