@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "Fenwick.h"
 
+namespace Fenwick {
+
 TEST(UpdateTest, IncrementTest) {
   Fenwick<int> tree = Fenwick<int>(10);
 
@@ -9,3 +11,4 @@ TEST(UpdateTest, IncrementTest) {
   ASSERT_EQ(static_cast<int>(tree[0]), 1);
 }
 
+}

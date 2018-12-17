@@ -1,5 +1,7 @@
 #include <vector>
 
+namespace Fenwick {
+
 template <class T>
 class Fenwick {
 private:
@@ -77,4 +79,6 @@ void Fenwick<T>::update_tree(int idx, const_reference delta) {
   idx = idx + (idx & (-idx));
 
   update_tree(idx, delta);
+}
+
 }
