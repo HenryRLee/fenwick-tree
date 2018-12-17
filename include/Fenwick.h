@@ -1,3 +1,6 @@
+#ifndef FENWICK_H
+#define FENWICK_H
+
 #include <vector>
 
 namespace Fenwick {
@@ -101,3 +104,5 @@ Fenwick<T>::sum(int n) const {
 }
 
 }
+
+#endif // FENWICK_H
