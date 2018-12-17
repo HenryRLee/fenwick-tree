@@ -49,6 +49,7 @@ private:
   int size_;
 
   void update(int idx, const T & delta);
+  void update_tree(int idx, const T & delta);
 
   friend class Node;
 };
@@ -56,4 +57,19 @@ private:
 template<class T>
 void Fenwick<T>::update(int idx, const T & delta) {
   data_[idx] += delta;
+
+  update_tree(idx + 1, delta);
+}
+
+template<class T>
+void Fenwick<T>::update_tree(int idx, const T & delta) {
+  if (idx < 0 || idx >= size_) {
+    return;
+  }
+
+  tree_[idx - 1] += delta;
+
+  idx = idx + (idx & (-idx));
+
+  update_tree(idx, delta);
 }
