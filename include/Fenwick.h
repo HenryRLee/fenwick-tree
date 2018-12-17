@@ -2,8 +2,10 @@
 
 template <class T>
 class Fenwick {
-public:
+private:
   class Node;
+
+public:
 
   Fenwick() { }
   Fenwick(int size) { resize(size); };
@@ -26,6 +28,7 @@ public:
     return Node(*this, idx);
   }
 
+private:
   class Node {
     public:
       Node(Fenwick &tree, int idx) : tree_(tree), idx_(idx) { }
@@ -42,7 +45,6 @@ public:
       const int idx_;
   };
 
-private:
   std::vector<T> data_;
   std::vector<T> tree_;
 
