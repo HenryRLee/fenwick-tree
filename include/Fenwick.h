@@ -32,9 +32,14 @@ public:
 
       operator T() const { return tree_.data_[idx_]; }
 
+      Node & operator+=(const T & delta) {
+        tree_.update(idx_, delta);
+        return *this;
+      }
+
     private:
       Fenwick &tree_;
-      int idx_;
+      const int idx_;
   };
 
 private:
@@ -43,5 +48,12 @@ private:
 
   int size_;
 
+  void update(int idx, const T & delta);
+
   friend class Node;
 };
+
+template<class T>
+void Fenwick<T>::update(int idx, const T & delta) {
+  data_[idx] += delta;
+}

@@ -39,6 +39,6 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 include_directories(include)
-add_executable(unit_test test/constructor.cc test/node.cc)
+add_executable(unit_test test/constructor.cc test/node.cc test/update.cc)
 target_link_libraries(unit_test gtest_main)
 add_test(NAME unit_test COMMAND unit_test)
