@@ -25,6 +25,8 @@ public:
     return size_;
   }
 
+  value_type sum(int n) const;
+
   Node operator[] (int idx) {
     if (idx < 0 || idx >= size_) {
       throw std::out_of_range("Fenwick: index out of range");
@@ -79,6 +81,23 @@ void Fenwick<T>::update_tree(int idx, const_reference delta) {
   idx = idx + (idx & (-idx));
 
   update_tree(idx, delta);
+}
+
+template<class T>
+typename Fenwick<T>::value_type
+Fenwick<T>::sum(int n) const {
+  value_type ret = 0;
+
+  if (n > size_) {
+    n = size_;
+  }
+
+  while (n > 0) {
+    ret += tree_[n - 1];
+    n = n - (n & (-n));
+  }
+
+  return ret;
 }
 
 }
