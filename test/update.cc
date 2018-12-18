@@ -11,4 +11,12 @@ TEST(UpdateTest, Increment) {
   ASSERT_EQ(static_cast<int>(tree[0]), 1);
 }
 
+TEST(UpdateTest, Assign) {
+  Fenwick<int> tree = Fenwick<int>(10);
+
+  tree[0] = 2;
+
+  ASSERT_EQ(static_cast<int>(tree[0]), 2);
+}
+
 }

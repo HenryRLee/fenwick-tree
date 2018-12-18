@@ -66,6 +66,12 @@ private:
         return *this;
       }
 
+      Node & operator=(const_reference value) {
+        value_type delta = value - tree_.data_[idx_];
+
+        return operator+=(delta);
+      }
+
     private:
       Fenwick &tree_;
       const size_type idx_;
