@@ -3,7 +3,7 @@
 
 namespace Fenwick {
 
-TEST(UpdateTest, IncrementTest) {
+TEST(UpdateTest, Increment) {
   Fenwick<int> tree = Fenwick<int>(10);
 
   tree[0] += 1;
