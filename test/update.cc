@@ -8,7 +8,7 @@ TEST(UpdateTest, Increment) {
 
   tree[0] += 1;
 
-  ASSERT_EQ(static_cast<int>(tree[0]), 1);
+  ASSERT_EQ(tree[0], 1);
 }
 
 TEST(UpdateTest, Decrement) {
@@ -16,7 +16,7 @@ TEST(UpdateTest, Decrement) {
 
   tree[0] -= 3;
 
-  ASSERT_EQ(static_cast<int>(tree[0]), -3);
+  ASSERT_EQ(tree[0], -3);
 }
 
 TEST(UpdateTest, Assign) {
@@ -24,7 +24,7 @@ TEST(UpdateTest, Assign) {
 
   tree[0] = 2;
 
-  ASSERT_EQ(static_cast<int>(tree[0]), 2);
+  ASSERT_EQ(tree[0], 2);
 }
 
 }
