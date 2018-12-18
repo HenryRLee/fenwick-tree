@@ -3,13 +3,37 @@
 
 namespace Fenwick {
 
-TEST(NodeTest, ConversionOperator) {
+TEST(NodeTest, At) {
+  Fenwick<int> tree = Fenwick<int>(10);
+
+  tree.at(0);
+}
+
+TEST(NodeTest, AtWithConst) {
+  const Fenwick<int> tree = Fenwick<int>(10);
+
+  tree.at(0);
+}
+
+TEST(NodeTest, Conversion) {
   Fenwick<int> tree = Fenwick<int>(10);
 
   int node = tree[0];
 }
 
-TEST(NodeTest, Const) {
+TEST(NodeTest, ConversionWithConst) {
+  const Fenwick<int> tree = Fenwick<int>(10);
+
+  int node = tree[0];
+}
+
+TEST(NodeTest, Suffix) {
+  Fenwick<int> tree = Fenwick<int>(10);
+
+  tree[0];
+}
+
+TEST(NodeTest, SuffixWithConst) {
   const Fenwick<int> tree = Fenwick<int>(10);
 
   tree[0];

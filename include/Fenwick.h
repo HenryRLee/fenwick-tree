@@ -33,6 +33,15 @@ public:
   Node operator[] (int idx) { return Node(*this, idx); }
   const_reference operator[] (int idx) const { return data_[idx]; }
 
+  Node at(int idx) {
+    check_out_of_range(idx);
+    return (*this)[idx];
+  }
+  const_reference at(int idx) const {
+    check_out_of_range(idx);
+    return (*this)[idx];
+  }
+
 private:
   class Node {
     public:
@@ -57,6 +66,8 @@ private:
 
   void update(int idx, const_reference delta);
   void update_tree(int idx, const_reference delta);
+
+  void check_out_of_range(int idx) const;
 
   friend class Node;
 };
@@ -96,6 +107,13 @@ Fenwick<T>::sum(int n) const {
   }
 
   return ret;
+}
+
+template<class T>
+void Fenwick<T>::check_out_of_range(int idx) const {
+  if (idx < 0 || idx >= size_) {
+    throw std::out_of_range("Fenwick: out of range");
+  }
 }
 
 }
