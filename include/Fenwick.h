@@ -66,9 +66,13 @@ private:
         return *this;
       }
 
+      Node & operator-=(const_reference delta) {
+        tree_.update(idx_, -delta);
+        return *this;
+      }
+
       Node & operator=(const_reference value) {
         value_type delta = value - tree_.data_[idx_];
-
         return operator+=(delta);
       }
 
