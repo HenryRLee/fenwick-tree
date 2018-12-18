@@ -16,7 +16,9 @@ public:
   typedef const value_type & const_reference;
 
   Fenwick() { }
-  Fenwick(int size) { resize(size); };
+  Fenwick(int size) {
+    resize(size);
+  };
 
   void resize(int size) {
     data_.resize(size);
@@ -30,13 +32,19 @@ public:
 
   value_type sum(int n) const;
 
-  Node operator[] (int idx) { return Node(*this, idx); }
-  const_reference operator[] (int idx) const { return data_[idx]; }
+  Node operator[] (int idx) {
+    return Node(*this, idx);
+  }
+
+  const_reference operator[] (int idx) const {
+    return data_[idx];
+  }
 
   Node at(int idx) {
     check_out_of_range(idx);
     return (*this)[idx];
   }
+
   const_reference at(int idx) const {
     check_out_of_range(idx);
     return (*this)[idx];
@@ -47,7 +55,9 @@ private:
     public:
       Node(Fenwick &tree, int idx) : tree_(tree), idx_(idx) { }
 
-      operator value_type() const { return tree_.data_[idx_]; }
+      operator value_type() const {
+        return tree_.data_[idx_];
+      }
 
       Node & operator+=(const_reference delta) {
         tree_.update(idx_, delta);
