@@ -31,6 +31,7 @@ public:
   value_type sum(int n) const;
 
   Node operator[] (int idx) { return Node(*this, idx); }
+  const_reference operator[] (int idx) const { return data_[idx]; }
 
 private:
   class Node {
