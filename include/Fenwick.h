@@ -15,6 +15,8 @@ public:
   typedef Alloc allocator_type;
   typedef value_type& reference;
   typedef const value_type& const_reference;
+  typedef typename std::allocator_traits<allocator_type>::pointer pointer;
+  typedef typename std::allocator_traits<allocator_type>::const_pointer const_pointer;
   typedef ptrdiff_t difference_type;
   typedef size_t size_type;
 
