@@ -11,6 +11,9 @@ private:
   class Node;
 
 public:
+  /*
+   * Member types
+   */
   typedef T value_type;
   typedef Alloc allocator_type;
   typedef value_type& reference;
@@ -24,11 +27,18 @@ public:
   typedef ptrdiff_t difference_type;
   typedef size_t size_type;
 
+  /*
+   * Constructors
+   */
   Fenwick() { }
+
   Fenwick(size_type size) {
     resize(size);
   };
 
+  /*
+   * Capacity
+   */
   void resize(size_type size) {
     data_.resize(size);
     tree_.resize(size);
@@ -39,8 +49,14 @@ public:
     return size_;
   }
 
+  /*
+   * Sum
+   */
   value_type sum(size_type n) const;
 
+  /*
+   * Element access
+   */
   Node operator[](size_type idx) {
     return Node(*this, idx);
   }
@@ -59,6 +75,9 @@ public:
     return (*this)[idx];
   }
 
+  /*
+   * Allocator
+   */
   allocator_type get_allocator() const {
     return allocator_type();
   }
