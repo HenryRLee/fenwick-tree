@@ -17,6 +17,10 @@ public:
   typedef const value_type& const_reference;
   typedef typename std::allocator_traits<allocator_type>::pointer pointer;
   typedef typename std::allocator_traits<allocator_type>::const_pointer const_pointer;
+  typedef typename std::vector<value_type, allocator_type>::iterator iterator;
+  typedef typename std::vector<value_type, allocator_type>::const_iterator const_iterator;
+  typedef std::reverse_iterator<iterator> reverse_iterator;
+  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
   typedef ptrdiff_t difference_type;
   typedef size_t size_type;
 
