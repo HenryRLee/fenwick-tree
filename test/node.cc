@@ -39,4 +39,10 @@ TEST(NodeTest, SuffixWithConst) {
   tree[0];
 }
 
+TEST(NodeTest, Comparison) {
+  const Fenwick<int> tree = Fenwick<int>(10);
+
+  ASSERT_EQ(tree[0], tree[1]);
+}
+
 }
