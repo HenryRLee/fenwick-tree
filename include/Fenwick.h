@@ -5,13 +5,14 @@
 
 namespace Fenwick {
 
-template <class T>
+template <class T, class Alloc = std::allocator<T>>
 class Fenwick {
 private:
   class Node;
 
 public:
-  typedef T value_type ;
+  typedef T value_type;
+  typedef Alloc allocator_type;
   typedef value_type& reference;
   typedef const value_type& const_reference;
   typedef ptrdiff_t difference_type;
@@ -52,6 +53,10 @@ public:
     return (*this)[idx];
   }
 
+  allocator_type get_allocator() const {
+    return allocator_type();
+  }
+
 private:
   class Node {
     public:
@@ -81,8 +86,8 @@ private:
       const size_type idx_;
   };
 
-  std::vector<value_type> data_;
-  std::vector<value_type> tree_;
+  std::vector<value_type, allocator_type> data_;
+  std::vector<value_type, allocator_type> tree_;
 
   size_type size_;
 
@@ -94,15 +99,15 @@ private:
   friend class Node;
 };
 
-template<class T>
-void Fenwick<T>::update(size_type idx, const_reference delta) {
+template<class T, class Alloc>
+void Fenwick<T, Alloc>::update(size_type idx, const_reference delta) {
   data_[idx] += delta;
 
   update_tree(idx + 1, delta);
 }
 
-template<class T>
-void Fenwick<T>::update_tree(size_type idx, const_reference delta) {
+template<class T, class Alloc>
+void Fenwick<T, Alloc>::update_tree(size_type idx, const_reference delta) {
   if (idx >= size_) {
     return;
   }
@@ -114,9 +119,9 @@ void Fenwick<T>::update_tree(size_type idx, const_reference delta) {
   update_tree(idx, delta);
 }
 
-template<class T>
-typename Fenwick<T>::value_type
-Fenwick<T>::sum(size_type n) const {
+template<class T, class Alloc>
+typename Fenwick<T, Alloc>::value_type
+Fenwick<T, Alloc>::sum(size_type n) const {
   value_type ret = 0;
 
   if (n > size_) {
@@ -131,8 +136,8 @@ Fenwick<T>::sum(size_type n) const {
   return ret;
 }
 
-template<class T>
-void Fenwick<T>::check_out_of_range(size_type idx) const {
+template<class T, class Alloc>
+void Fenwick<T, Alloc>::check_out_of_range(size_type idx) const {
   if (idx >= size_) {
     throw std::out_of_range("Fenwick: out of range");
   }
