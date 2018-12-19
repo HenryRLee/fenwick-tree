@@ -12,8 +12,8 @@ private:
 
 public:
   typedef T value_type ;
-  typedef value_type & reference;
-  typedef const value_type & const_reference;
+  typedef value_type& reference;
+  typedef const value_type& const_reference;
   typedef ptrdiff_t difference_type;
   typedef size_t size_type;
 
@@ -28,7 +28,7 @@ public:
     size_ = size;
   }
 
-  size_type size () const {
+  size_type size() const {
     return size_;
   }
 
@@ -55,29 +55,29 @@ public:
 private:
   class Node {
     public:
-      Node(Fenwick &tree, size_type idx) : tree_(tree), idx_(idx) { }
+      Node(Fenwick& tree, size_type idx) : tree_(tree), idx_(idx) { }
 
       operator value_type() const {
         return tree_.data_[idx_];
       }
 
-      Node & operator+=(const_reference delta) {
+      Node& operator+=(const_reference delta) {
         tree_.update(idx_, delta);
         return *this;
       }
 
-      Node & operator-=(const_reference delta) {
+      Node& operator-=(const_reference delta) {
         tree_.update(idx_, -delta);
         return *this;
       }
 
-      Node & operator=(const_reference value) {
+      Node& operator=(const_reference value) {
         value_type delta = value - tree_.data_[idx_];
         return operator+=(delta);
       }
 
     private:
-      Fenwick &tree_;
+      Fenwick& tree_;
       const size_type idx_;
   };
 
