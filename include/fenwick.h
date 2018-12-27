@@ -3,10 +3,10 @@
 
 #include <vector>
 
-namespace Fenwick {
+namespace fenwick {
 
 template <class T, class Alloc = std::allocator<T>>
-class Fenwick {
+class fenwick {
 private:
   class Node;
 
@@ -30,9 +30,9 @@ public:
   /*
    * Constructors
    */
-  Fenwick() { }
+  fenwick() { }
 
-  Fenwick(size_type size) {
+  fenwick(size_type size) {
     resize(size);
   };
 
@@ -85,7 +85,7 @@ public:
 private:
   class Node {
     public:
-      Node(Fenwick& tree, size_type idx) : tree_(tree), idx_(idx) { }
+      Node(fenwick& tree, size_type idx) : tree_(tree), idx_(idx) { }
 
       operator value_type() const {
         return tree_.data_[idx_];
@@ -107,7 +107,7 @@ private:
       }
 
     private:
-      Fenwick& tree_;
+      fenwick& tree_;
       const size_type idx_;
   };
 
@@ -125,14 +125,14 @@ private:
 };
 
 template<class T, class Alloc>
-void Fenwick<T, Alloc>::update(size_type idx, const_reference delta) {
+void fenwick<T, Alloc>::update(size_type idx, const_reference delta) {
   data_[idx] += delta;
 
   update_tree(idx + 1, delta);
 }
 
 template<class T, class Alloc>
-void Fenwick<T, Alloc>::update_tree(size_type idx, const_reference delta) {
+void fenwick<T, Alloc>::update_tree(size_type idx, const_reference delta) {
   if (idx >= size_) {
     return;
   }
@@ -145,8 +145,8 @@ void Fenwick<T, Alloc>::update_tree(size_type idx, const_reference delta) {
 }
 
 template<class T, class Alloc>
-typename Fenwick<T, Alloc>::value_type
-Fenwick<T, Alloc>::sum(size_type n) const {
+typename fenwick<T, Alloc>::value_type
+fenwick<T, Alloc>::sum(size_type n) const {
   value_type ret = 0;
 
   if (n > size_) {
@@ -162,9 +162,9 @@ Fenwick<T, Alloc>::sum(size_type n) const {
 }
 
 template<class T, class Alloc>
-void Fenwick<T, Alloc>::check_out_of_range(size_type idx) const {
+void fenwick<T, Alloc>::check_out_of_range(size_type idx) const {
   if (idx >= size_) {
-    throw std::out_of_range("Fenwick: out of range");
+    throw std::out_of_range("fenwick: index out of range");
   }
 }
 

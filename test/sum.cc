@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
-#include "Fenwick.h"
+#include "fenwick.h"
 
-namespace Fenwick {
+namespace fenwick {
 
 TEST(SumTest, OneElement) {
-  Fenwick<int> tree = Fenwick<int>(10);
+  fenwick<int> tree = fenwick<int>(10);
 
   tree[0] += 1;
 
@@ -12,7 +12,7 @@ TEST(SumTest, OneElement) {
 }
 
 TEST(SumTest, ThreeElements) {
-  Fenwick<int> tree = Fenwick<int>(10);
+  fenwick<int> tree = fenwick<int>(10);
 
   tree[0] += 1;
   tree[1] += 5;
@@ -22,7 +22,7 @@ TEST(SumTest, ThreeElements) {
 }
 
 TEST(SumTest, ThreeElementsWithNegativeNumber) {
-  Fenwick<int> tree = Fenwick<int>(10);
+  fenwick<int> tree = fenwick<int>(10);
 
   tree[0] += 1;
   tree[1] += -9;

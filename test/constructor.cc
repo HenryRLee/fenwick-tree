@@ -1,14 +1,14 @@
 #include "gtest/gtest.h"
-#include "Fenwick.h"
+#include "fenwick.h"
 
-namespace Fenwick {
+namespace fenwick {
 
 TEST(ConstructorTest, DefaultConstructor) {
-  Fenwick<int> tree = Fenwick<int>();
+  fenwick<int> tree = fenwick<int>();
 }
 
 TEST(ConstructorTest, ConstructorWithSize) {
-  Fenwick<int> tree = Fenwick<int>(10);
+  fenwick<int> tree = fenwick<int>(10);
 }
 
 }

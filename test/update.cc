@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
-#include "Fenwick.h"
+#include "fenwick.h"
 
-namespace Fenwick {
+namespace fenwick {
 
 TEST(UpdateTest, Increment) {
-  Fenwick<int> tree = Fenwick<int>(10);
+  fenwick<int> tree = fenwick<int>(10);
 
   tree[0] += 1;
 
@@ -12,7 +12,7 @@ TEST(UpdateTest, Increment) {
 }
 
 TEST(UpdateTest, Decrement) {
-  Fenwick<int> tree = Fenwick<int>(10);
+  fenwick<int> tree = fenwick<int>(10);
 
   tree[0] -= 3;
 
@@ -20,7 +20,7 @@ TEST(UpdateTest, Decrement) {
 }
 
 TEST(UpdateTest, Assign) {
-  Fenwick<int> tree = Fenwick<int>(10);
+  fenwick<int> tree = fenwick<int>(10);
 
   tree[0] = 2;
 
