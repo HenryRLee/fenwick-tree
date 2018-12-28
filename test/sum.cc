@@ -31,6 +31,16 @@ TEST(SumTest, ThreeElementsWithNegativeNumber) {
   ASSERT_EQ(tree.sum(3), -3);
 }
 
+TEST(SumTest, Range) {
+  fenwick<int> tree = fenwick<int>(5);
+
+  tree[0] = 1;
+  tree[1] = 3;
+  tree[2] = 5;
+  tree[3] = 7;
+  tree[4] = 9;
+
+  ASSERT_EQ(tree.sum(1, 4), 15);
 }
 
 }

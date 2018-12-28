@@ -77,6 +77,7 @@ public:
    * Sum
    */
   value_type sum(size_type n) const;
+  value_type sum(size_type first, size_type last) const;
 
   /*
    * Element access
@@ -183,6 +184,12 @@ fenwick<T, Alloc>::sum(size_type n) const {
   }
 
   return ret;
+}
+
+template<class T, class Alloc>
+typename fenwick<T, Alloc>::value_type
+fenwick<T, Alloc>::sum(size_type first, size_type last) const {
+  return sum(last) - sum(first);
 }
 
 template<class T, class Alloc>
