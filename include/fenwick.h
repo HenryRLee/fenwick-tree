@@ -157,7 +157,7 @@ void fenwick<T, Alloc>::update(size_type idx, const_reference delta) {
 
 template<class T, class Alloc>
 void fenwick<T, Alloc>::update_tree(size_type idx, const_reference delta) {
-  if (idx >= size_) {
+  if (idx > size_) {
     return;
   }
 
