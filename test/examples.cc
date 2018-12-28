@@ -2,10 +2,8 @@
 #include "fenwick.h"
 #include <iostream>
 
-namespace fenwick {
-
 TEST(Examples, ExampleOne) {
-  fenwick<int> array(5); // initiate an array with 5 elements
+  fenwick::fenwick<int> array(5); // initiate an array with 5 elements
 
   array[0] = 1;
   array[1] = 3;
@@ -15,6 +13,4 @@ TEST(Examples, ExampleOne) {
 
   ASSERT_EQ(array.sum(3), 9); // the sum of the first three elements
   ASSERT_EQ(array.sum(1, 4), 15); // the sum of the range [1, 4)
-}
-
 }
