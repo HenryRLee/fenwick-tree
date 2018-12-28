@@ -32,7 +32,7 @@ namespace fenwick {
 template <class T, class Alloc = std::allocator<T>>
 class fenwick {
 private:
-  class node;
+  class lvalue_type;
 
 public:
   /*
@@ -81,15 +81,15 @@ public:
   /*
    * Element access
    */
-  node operator[](size_type idx) {
-    return node(*this, idx);
+  lvalue_type operator[](size_type idx) {
+    return lvalue_type(*this, idx);
   }
 
   const_reference operator[](size_type idx) const {
     return data_[idx];
   }
 
-  node at(size_type idx) {
+  lvalue_type at(size_type idx) {
     check_out_of_range(idx);
     return (*this)[idx];
   }
@@ -107,25 +107,25 @@ public:
   }
 
 private:
-  class node {
+  class lvalue_type {
     public:
-      node(fenwick& tree, size_type idx) : tree_(tree), idx_(idx) { }
+      lvalue_type(fenwick& tree, size_type idx) : tree_(tree), idx_(idx) { }
 
       operator value_type() const {
         return tree_.data_[idx_];
       }
 
-      node& operator+=(const_reference delta) {
+      lvalue_type& operator+=(const_reference delta) {
         tree_.update(idx_, delta);
         return *this;
       }
 
-      node& operator-=(const_reference delta) {
+      lvalue_type& operator-=(const_reference delta) {
         tree_.update(idx_, -delta);
         return *this;
       }
 
-      node& operator=(const_reference value) {
+      lvalue_type& operator=(const_reference value) {
         value_type delta = value - tree_.data_[idx_];
         return operator+=(delta);
       }
@@ -145,7 +145,7 @@ private:
 
   void check_out_of_range(size_type idx) const;
 
-  friend class node;
+  friend class lvalue_type;
 };
 
 template<class T, class Alloc>
