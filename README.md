@@ -31,5 +31,5 @@ The library is a single header file library. Simply copy the header file `fenwic
 ### Unit test
 The unit test is based on Google Test, which requires CMake to compile.
 
-Run `cmake .` on the repository, this will generate a unit test program `unit_test`. Then run the program to test the result.
+Run `cmake .` on the repository, this will generate a unit test program `unit_test`. Then run the program `./unit_test` to test the result.
 
