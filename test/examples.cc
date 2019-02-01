@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "fenwick.h"
+#include "fenwick/fenwick.h"
 #include <iostream>
 
 TEST(Examples, ExampleOne) {
