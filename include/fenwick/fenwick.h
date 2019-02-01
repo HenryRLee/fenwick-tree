@@ -31,10 +31,10 @@ namespace fenwick {
 
 template <class T, class Alloc = std::allocator<T>>
 class fenwick {
-private:
+ private:
   class lvalue_type;
 
-public:
+ public:
   /*
    * Member types
    */
@@ -54,11 +54,9 @@ public:
   /*
    * Constructors
    */
-  fenwick() { }
+  fenwick() {}
 
-  fenwick(size_type size) {
-    resize(size);
-  };
+  fenwick(size_type size) { resize(size); };
 
   /*
    * Capacity
@@ -69,9 +67,7 @@ public:
     size_ = size;
   }
 
-  size_type size() const {
-    return size_;
-  }
+  size_type size() const { return size_; }
 
   /*
    * Sum
@@ -82,13 +78,9 @@ public:
   /*
    * Element access
    */
-  reference operator[](size_type idx) {
-    return lvalue_type(*this, idx);
-  }
+  reference operator[](size_type idx) { return lvalue_type(*this, idx); }
 
-  const_reference operator[](size_type idx) const {
-    return data_[idx];
-  }
+  const_reference operator[](size_type idx) const { return data_[idx]; }
 
   reference at(size_type idx) {
     check_out_of_range(idx);
@@ -107,33 +99,31 @@ public:
     return allocator_type();
   }
 
-private:
+ private:
   class lvalue_type {
-    public:
-      lvalue_type(fenwick& tree, size_type idx) : tree_(tree), idx_(idx) { }
+   public:
+    lvalue_type(fenwick& tree, size_type idx) : tree_(tree), idx_(idx) {}
 
-      operator value_type() const {
-        return tree_.data_[idx_];
-      }
+    operator value_type() const { return tree_.data_[idx_]; }
 
-      lvalue_type& operator+=(const_reference delta) {
-        tree_.update(idx_, delta);
-        return *this;
-      }
+    lvalue_type& operator+=(const_reference delta) {
+      tree_.update(idx_, delta);
+      return *this;
+    }
 
-      lvalue_type& operator-=(const_reference delta) {
-        tree_.update(idx_, -delta);
-        return *this;
-      }
+    lvalue_type& operator-=(const_reference delta) {
+      tree_.update(idx_, -delta);
+      return *this;
+    }
 
-      lvalue_type& operator=(const_reference value) {
-        value_type delta = value - tree_.data_[idx_];
-        return operator+=(delta);
-      }
+    lvalue_type& operator=(const_reference value) {
+      value_type delta = value - tree_.data_[idx_];
+      return operator+=(delta);
+    }
 
-    private:
-      fenwick& tree_;
-      const size_type idx_;
+   private:
+    fenwick& tree_;
+    const size_type idx_;
   };
 
   std::vector<value_type, allocator_type> data_;
