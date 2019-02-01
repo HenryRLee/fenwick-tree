@@ -40,9 +40,9 @@ public:
    */
   typedef T value_type;
   typedef Alloc allocator_type;
-  typedef value_type& reference;
+  typedef lvalue_type reference;
   typedef const value_type& const_reference;
-  typedef typename std::allocator_traits<allocator_type>::pointer pointer;
+  typedef typename std::allocator_traits<allocator_type>::const_pointer pointer;
   typedef typename std::allocator_traits<allocator_type>::const_pointer const_pointer;
   typedef typename std::vector<value_type, allocator_type>::iterator iterator;
   typedef typename std::vector<value_type, allocator_type>::const_iterator const_iterator;
@@ -82,7 +82,7 @@ public:
   /*
    * Element access
    */
-  lvalue_type operator[](size_type idx) {
+  reference operator[](size_type idx) {
     return lvalue_type(*this, idx);
   }
 
@@ -90,7 +90,7 @@ public:
     return data_[idx];
   }
 
-  lvalue_type at(size_type idx) {
+  reference at(size_type idx) {
     check_out_of_range(idx);
     return (*this)[idx];
   }
