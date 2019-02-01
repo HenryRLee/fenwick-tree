@@ -33,6 +33,7 @@ template <class T, class Alloc = std::allocator<T>>
 class fenwick {
  private:
   class lvalue_type;
+  template<typename Reference> class iterator_type;
 
  public:
   /*
@@ -44,8 +45,8 @@ class fenwick {
   typedef const value_type& const_reference;
   typedef typename std::allocator_traits<allocator_type>::const_pointer pointer;
   typedef typename std::allocator_traits<allocator_type>::const_pointer const_pointer;
-  typedef typename std::vector<value_type, allocator_type>::iterator iterator;
-  typedef typename std::vector<value_type, allocator_type>::const_iterator const_iterator;
+  typedef iterator_type<reference> iterator;
+  typedef iterator_type<const_reference> const_iterator;
   typedef std::reverse_iterator<iterator> reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
   typedef ptrdiff_t difference_type;
@@ -57,6 +58,15 @@ class fenwick {
   fenwick() {}
 
   fenwick(size_type size) { resize(size); };
+
+  /*
+   * Iterators
+   */
+  iterator begin() noexcept { return iterator(*this, 0); };
+  const_iterator begin() const noexcept { return const_iterator(*this, 0); };
+
+  iterator end() noexcept { return iterator(*this, size_ - 1); };
+  const_iterator end() const noexcept { return const_iterator(*this, size_ - 1); };
 
   /*
    * Capacity
@@ -124,6 +134,66 @@ class fenwick {
    private:
     fenwick& tree_;
     const size_type idx_;
+  };
+
+  template<typename Reference>
+  class iterator_type {
+   public:
+    typedef std::random_access_iterator_tag iterator_category;
+    typedef value_type value_type;
+    typedef difference_type difference_type;
+    typedef Reference reference;
+    typedef pointer pointer;
+
+    iterator_type() {}
+
+    reference operator*() const {
+      return tree_->at(idx_);
+    }
+
+    pointer operator->() const {
+      return std::pointer_traits<pointer>::pointer_to(*this);
+    }
+
+    iterator_type& operator++() {
+      ++idx_;
+      return *this;
+    }
+
+    iterator_type operator++(int) {
+      iterator_type tmp(*this);
+      ++idx_;
+      return tmp;
+    }
+
+    iterator_type& operator--() {
+      --idx_;
+      return *this;
+    }
+
+    iterator_type operator--(int) {
+      iterator_type tmp(*this);
+      --idx_;
+      return tmp;
+    }
+
+    template<typename Tp>
+    bool operator==(const iterator_type<Tp>& other) {
+      return tree_ == other.tree_ && idx_ == other.idx_;
+    }
+
+    template<typename Tp>
+    bool operator!=(const iterator_type<Tp>& other) {
+      return !operator==(other);
+    }
+
+   private:
+    fenwick* tree_;
+    size_type idx_;
+
+    iterator_type(fenwick& tree, size_type idx) : tree_(&tree), idx_(idx) {}
+
+    friend class fenwick<T, Alloc>;
   };
 
   std::vector<value_type, allocator_type> data_;
