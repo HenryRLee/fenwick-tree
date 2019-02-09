@@ -9,6 +9,10 @@ TEST(IteratorTest, BeginEnd) {
   fenwick<int>::iterator it;
   it = tree.begin();
   it = tree.end();
+
+  fenwick<int>::const_iterator cit;
+  cit = tree.cbegin();
+  cit = tree.cend();
 }
 
 TEST(IteratorTest, Iterate) {
@@ -20,6 +24,12 @@ TEST(IteratorTest, Iterate) {
 
   int c = 0;
   for (auto it = tree.begin(); it != tree.end(); it++, c++) {
+    ASSERT_EQ(c, *it);
+  }
+
+  c = 0;
+
+  for (auto it = tree.cbegin(); it != tree.cend(); it++, c++) {
     ASSERT_EQ(c, *it);
   }
 }

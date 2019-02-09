@@ -68,6 +68,9 @@ class fenwick {
   iterator end() noexcept { return iterator(*this, size_ - 1); };
   const_iterator end() const noexcept { return const_iterator(*this, size_ - 1); };
 
+  const_iterator cbegin() const noexcept { return begin(); }
+  const_iterator cend() const noexcept { return end(); }
+
   /*
    * Capacity
    */
@@ -188,10 +191,17 @@ class fenwick {
     }
 
    private:
-    fenwick* tree_;
+    typedef typename std::conditional<
+        std::is_const<typename std::remove_reference<reference>::type>::value,
+        const fenwick&, fenwick&>::type tree_reference;
+    typedef typename std::conditional<
+        std::is_const<typename std::remove_reference<reference>::type>::value,
+        const fenwick*, fenwick*>::type tree_pointer;
+
+    tree_pointer tree_;
     size_type idx_;
 
-    iterator_type(fenwick& tree, size_type idx) : tree_(&tree), idx_(idx) {}
+    iterator_type(tree_reference tree, size_type idx) : tree_(&tree), idx_(idx) {}
 
     friend class fenwick<T, Alloc>;
   };
