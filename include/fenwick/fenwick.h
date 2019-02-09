@@ -65,11 +65,24 @@ class fenwick {
   iterator begin() noexcept { return iterator(*this, 0); };
   const_iterator begin() const noexcept { return const_iterator(*this, 0); };
 
-  iterator end() noexcept { return iterator(*this, size_ - 1); };
-  const_iterator end() const noexcept { return const_iterator(*this, size_ - 1); };
+  iterator end() noexcept { return iterator(*this, size_); };
+  const_iterator end() const noexcept { return const_iterator(*this, size_); };
 
   const_iterator cbegin() const noexcept { return begin(); }
   const_iterator cend() const noexcept { return end(); }
+
+  reverse_iterator rbegin() noexcept { return reverse_iterator(end()); };
+  const_reverse_iterator rbegin() const noexcept {
+    return const_reverse_iterator(cend());
+  };
+
+  reverse_iterator rend() noexcept { return reverse_iterator(begin()); };
+  const_reverse_iterator rend() const noexcept {
+    return const_reverse_iterator(cbegin());
+  };
+
+  const_reverse_iterator crbegin() const noexcept { return rbegin(); }
+  const_reverse_iterator crend() const noexcept { return rend(); }
 
   /*
    * Capacity
