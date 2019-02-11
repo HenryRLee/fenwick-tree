@@ -168,7 +168,7 @@ class fenwick {
     }
 
     pointer operator->() const {
-      return std::pointer_traits<pointer>::pointer_to(*this);
+      return &(static_cast<const fenwick *>(tree_)->at(idx_));
     }
 
     iterator_type& operator++() {
