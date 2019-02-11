@@ -52,4 +52,65 @@ TEST(IteratorTest, Iterate) {
   }
 }
 
+TEST(IteratorTest, Update) {
+  fenwick<int> tree = fenwick<int>(5);
+
+  for (int i = 0; i < 5; i++) {
+    tree[i] = i;
+  }
+
+  auto it = tree.begin();
+
+  *it = 7;
+  *++it = 6;
+
+  // 7, 6, 2, 3, 4
+
+  ASSERT_EQ(tree[0], 7);
+  ASSERT_EQ(tree[1], 6);
+  ASSERT_EQ(tree.sum(3), 15); // 7 + 6 + 2
+}
+
+struct Data {
+  int data;
+  Data() {}
+  Data(int data) : data(data) {}
+
+  Data& operator+=(const Data& other) {
+    data += other.data;
+    return *this;
+  }
+
+  Data& operator-=(const Data& other) {
+    data -= other.data;
+    return *this;
+  }
+
+  Data& operator+(const Data& other) const {
+    return Data(*this) += other;
+  }
+
+  Data& operator-(const Data& other) const {
+    return Data(*this) -= other;
+  }
+};
+
+TEST(IteratorTest, Pointer) {
+  fenwick<struct Data> tree = fenwick<struct Data>(5);
+
+  for (int i = 0; i < 5; i++) {
+    tree[i] = Data(i);
+  }
+
+  int c = 0;
+  for (auto it = tree.begin(); it != tree.end(); it++, c++) {
+    ASSERT_EQ(it->data, c);
+  }
+
+  c = 0;
+  for (auto it = tree.cbegin(); it != tree.cend(); it++, c++) {
+    ASSERT_EQ(it->data, c);
+  }
+}
+
 }
