@@ -57,7 +57,9 @@ class fenwick {
    */
   fenwick() {}
 
-  fenwick(size_type size) { resize(size); };
+  fenwick(size_type size, const value_type& val = value_type()) {
+    resize(size, val);
+  };
 
   /*
    * Iterators
@@ -92,6 +94,13 @@ class fenwick {
     tree_.resize(size);
     size_ = size;
   }
+
+  void resize(size_type size, const value_type& val) {
+    data_.resize(size, val);
+    tree_.resize(size, val);
+    size_ = size;
+  }
+
 
   size_type size() const { return size_; }
 
