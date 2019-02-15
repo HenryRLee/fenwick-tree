@@ -55,7 +55,7 @@ class fenwick {
   /*
    * Constructors
    */
-  fenwick() {}
+  fenwick() { resize(0); }
 
   fenwick(size_type size, const value_type& val = value_type()) {
     resize(size, val);
