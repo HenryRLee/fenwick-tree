@@ -90,19 +90,13 @@ class fenwick {
    * Capacity
    */
   void resize(size_type size) {
-    data_.resize(size);
-    tree_.resize(size);
-    size_ = size;
+    resize(size, value_type());
   }
 
-  void resize(size_type size, const value_type& val) {
-    data_.resize(size, val);
-    tree_.resize(size, val);
-    size_ = size;
-  }
-
+  void resize(size_type size, const value_type& val);
 
   size_type size() const { return size_; }
+  size_type capacity() const { return capacity_; }
 
   /*
    * Sum
@@ -231,7 +225,8 @@ class fenwick {
   std::vector<value_type, allocator_type> data_;
   std::vector<value_type, allocator_type> tree_;
 
-  size_type size_;
+  size_type size_ = 0;
+  size_type capacity_ = 0;
 
   void update(size_type idx, const_reference delta);
   void update_tree(size_type idx, const_reference delta);
@@ -240,6 +235,39 @@ class fenwick {
 
   friend class lvalue_type;
 };
+
+template<class T, class Alloc>
+void fenwick<T, Alloc>::resize(size_type size, const value_type& val) {
+  size_type original_size = size_;
+
+  size_ = size;
+  data_.resize(size, val);
+
+  if (size > original_size) {
+    /*
+     * If the container is expanding, the tree needs to be recalcuated.
+     */
+    tree_.clear();
+    tree_.resize(size);
+    for (size_type i = 0; i < original_size; i++) {
+      /*
+       * Because updating the tree requires the delta, so the value of
+       * data_[i] needs to be reset before the update.
+       */
+      value_type tmp = value_type();
+      std::swap(tmp, data_[i]);
+      operator[](i) = tmp;
+    }
+    for (size_type i = original_size; i < size; i++) {
+      operator[](i) = val;
+    }
+
+    if (size > capacity_) {
+      // Update the capacity variable
+      capacity_ = size;
+    }
+  }
+}
 
 template<class T, class Alloc>
 void fenwick<T, Alloc>::update(size_type idx, const_reference delta) {
