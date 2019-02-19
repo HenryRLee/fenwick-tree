@@ -243,10 +243,11 @@ void fenwick<T, Alloc>::resize(size_type size, const value_type& val) {
   size_ = size;
   data_.resize(size, val);
 
-  if (size > original_size) {
+  if (size > capacity_) {
     /*
      * If the container is expanding, the tree needs to be recalcuated.
      */
+    capacity_ = size;
     tree_.clear();
     tree_.resize(size);
     for (size_type i = 0; i < original_size; i++) {
@@ -261,11 +262,6 @@ void fenwick<T, Alloc>::resize(size_type size, const value_type& val) {
     for (size_type i = original_size; i < size; i++) {
       operator[](i) = val;
     }
-
-    if (size > capacity_) {
-      // Update the capacity variable
-      capacity_ = size;
-    }
   }
 }
 
@@ -278,7 +274,7 @@ void fenwick<T, Alloc>::update(size_type idx, const_reference delta) {
 
 template<class T, class Alloc>
 void fenwick<T, Alloc>::update_tree(size_type idx, const_reference delta) {
-  if (idx > size_) {
+  if (idx > capacity_) {
     return;
   }
 
