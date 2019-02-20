@@ -260,7 +260,13 @@ void fenwick<T, Alloc>::resize(size_type size, const value_type& val) {
       operator[](i) = tmp;
     }
     for (size_type i = original_size; i < size; i++) {
-      operator[](i) = val;
+      /*
+       * Because updating the tree requires the delta, so the value of
+       * data_[i] needs to be reset before the update.
+       */
+      value_type tmp = value_type();
+      std::swap(tmp, data_[i]);
+      operator[](i) = tmp;
     }
   }
 }
