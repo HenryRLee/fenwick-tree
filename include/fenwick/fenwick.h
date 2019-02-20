@@ -121,6 +121,12 @@ class fenwick {
     return (*this)[idx];
   }
 
+  reference front() { return operator[](0); }
+  const_reference front() const { return operator[](0); }
+
+  reference back() { return operator[](size_ - 1); }
+  const_reference back() const { return operator[](size_ - 1); }
+
   /*
    * Modifiers
    */

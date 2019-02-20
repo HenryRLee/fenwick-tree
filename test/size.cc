@@ -25,7 +25,7 @@ TEST(SizeTest, Resize) {
   ASSERT_EQ(tree.size(), 10);
   ASSERT_GE(tree.capacity(), 10);
 
-  tree[9] = 10;
+  tree.back() = 10;
   ASSERT_EQ(tree.sum(10), 10);
 
   tree.resize(20);
@@ -33,9 +33,9 @@ TEST(SizeTest, Resize) {
   ASSERT_EQ(tree.size(), 20);
   ASSERT_GE(tree.capacity(), 20);
 
-  tree[19] = 10;
+  tree.back() = 10;
   ASSERT_EQ(tree[9], 10);
-  ASSERT_EQ(tree[19], 10);
+  ASSERT_EQ(tree.back(), 10);
   ASSERT_EQ(tree.sum(10), 10);
   ASSERT_EQ(tree.sum(10, 20), 10);
   ASSERT_EQ(tree.sum(20), 20);
@@ -45,7 +45,7 @@ TEST(SizeTest, Resize) {
   ASSERT_EQ(tree.size(), 5);
   ASSERT_GE(tree.capacity(), 5);
 
-  tree[4] = 5;
+  tree.back() = 5;
   ASSERT_EQ(tree.sum(5), 5);
 }
 

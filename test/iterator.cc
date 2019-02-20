@@ -66,7 +66,7 @@ TEST(IteratorTest, Update) {
 
   // 7, 6, 2, 3, 4
 
-  ASSERT_EQ(tree[0], 7);
+  ASSERT_EQ(tree.front(), 7);
   ASSERT_EQ(tree[1], 6);
   ASSERT_EQ(tree.sum(3), 15); // 7 + 6 + 2
 }
