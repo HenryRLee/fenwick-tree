@@ -151,18 +151,21 @@ class fenwick {
     operator value_type() const { return tree_.data_[idx_]; }
 
     lvalue_type& operator+=(const_reference delta) {
-      tree_.update(idx_, delta);
+      tree_.update_delta(idx_, delta);
+      tree_.data_[idx_] += delta;
       return *this;
     }
 
     lvalue_type& operator-=(const_reference delta) {
-      tree_.update(idx_, -delta);
+      tree_.update_delta(idx_, -delta);
+      tree_.data_[idx_] -= delta;
       return *this;
     }
 
     lvalue_type& operator=(const_reference value) {
-      value_type delta = value - tree_.data_[idx_];
-      return operator+=(delta);
+      tree_.update_value(idx_, value);
+      tree_.data_[idx_] = value;
+      return *this;
     }
 
    private:
@@ -243,8 +246,10 @@ class fenwick {
   size_type size_ = 0;
   size_type capacity_ = 0;
 
-  void update(size_type idx, const_reference delta);
-  void update_tree(size_type idx, const_reference delta);
+  void update_value(size_type idx, const_reference value);
+  void update_delta(size_type idx, const_reference delta);
+  void update_recursive(size_type idx, const_reference delta);
+  void reallocate_tree(size_type size, const value_type& val);
 
   void check_out_of_range(size_type idx) const;
 
@@ -253,9 +258,6 @@ class fenwick {
 
 template<class T, class Alloc>
 void fenwick<T, Alloc>::resize(size_type size, const value_type& val) {
-  size_type original_size = size_;
-
-  size_ = size;
   data_.resize(size, val);
 
   if (size > capacity_) {
@@ -263,38 +265,47 @@ void fenwick<T, Alloc>::resize(size_type size, const value_type& val) {
      * If the container is expanding, the tree needs to be recalcuated.
      */
     capacity_ = size;
-    tree_.clear();
-    tree_.resize(size);
-    for (size_type i = 0; i < original_size; i++) {
-      /*
-       * Because updating the tree requires the delta, so the value of
-       * data_[i] needs to be reset before the update.
-       */
-      value_type tmp = value_type();
-      std::swap(tmp, data_[i]);
-      operator[](i) = tmp;
-    }
-    for (size_type i = original_size; i < size; i++) {
-      /*
-       * Because updating the tree requires the delta, so the value of
-       * data_[i] needs to be reset before the update.
-       */
-      value_type tmp = value_type();
-      std::swap(tmp, data_[i]);
-      operator[](i) = tmp;
-    }
+    reallocate_tree(size, val);
+  }
+
+  size_ = size;
+}
+
+/*
+ * A custom implementation of tree_.resize(size, val)
+ */
+template<class T, class Alloc>
+void fenwick<T, Alloc>::reallocate_tree(size_type size, const value_type& val) {
+  capacity_ = size;
+  tree_.clear();
+  tree_.resize(size);
+  for (size_type i = 0; i < size_; i++) {
+    update_delta(i, data_[i]);
+  }
+  for (size_type i = size_; i < size; i++) {
+    update_delta(i, val);
   }
 }
 
+/*
+ * A custom implementation of tree_[i] = value
+ */
 template<class T, class Alloc>
-void fenwick<T, Alloc>::update(size_type idx, const_reference delta) {
-  data_[idx] += delta;
+void fenwick<T, Alloc>::update_value(size_type idx, const_reference value) {
+  const_reference delta = value - data_[idx];
+  update_delta(idx, delta);
+}
 
-  update_tree(idx + 1, delta);
+/*
+ * A custom implementation of tree_[i] += delta
+ */
+template<class T, class Alloc>
+void fenwick<T, Alloc>::update_delta(size_type idx, const_reference delta) {
+  update_recursive(idx + 1, delta);
 }
 
 template<class T, class Alloc>
-void fenwick<T, Alloc>::update_tree(size_type idx, const_reference delta) {
+void fenwick<T, Alloc>::update_recursive(size_type idx, const_reference delta) {
   if (idx > capacity_) {
     return;
   }
@@ -303,7 +314,7 @@ void fenwick<T, Alloc>::update_tree(size_type idx, const_reference delta) {
 
   idx = idx + (idx & (-idx));
 
-  update_tree(idx, delta);
+  update_recursive(idx, delta);
 }
 
 template<class T, class Alloc>
