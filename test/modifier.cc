@@ -23,4 +23,17 @@ TEST(ModifierTest, Assign) {
   ASSERT_EQ(tree.sum(10), 500);
 }
 
+TEST(ModifierTest, PushBack) {
+  fenwick<int> tree;
+
+  for (int i = 0; i < 10; i++) {
+    tree.push_back(i);
+  }
+
+  ASSERT_EQ(tree.size(), 10);
+  ASSERT_EQ(tree.front(), 0);
+  ASSERT_EQ(tree.back(), 9);
+  ASSERT_EQ(tree.sum(10), 45);
+}
+
 }

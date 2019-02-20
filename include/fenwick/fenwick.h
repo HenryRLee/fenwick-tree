@@ -135,6 +135,25 @@ class fenwick {
     resize(n, val);
   }
 
+  void push_back(const value_type& val) {
+    ++size_;
+
+    if (size_ > capacity_) {
+      if (capacity_ > 0)
+        capacity_ *= 2;
+      else
+        capacity_++;
+
+      data_.resize(capacity_);
+      reallocate_tree(capacity_, value_type());
+    } else {
+      data_.resize(size_);
+    }
+
+    update_delta(size_ - 1, val);
+    data_[size_ - 1] = val;
+  }
+
   void clear() noexcept {
     size_ = 0;
     capacity_ = 0;
@@ -282,7 +301,6 @@ void fenwick<T, Alloc>::resize(size_type size, const value_type& val) {
  */
 template<class T, class Alloc>
 void fenwick<T, Alloc>::reallocate_tree(size_type size, const value_type& val) {
-  capacity_ = size;
   tree_.clear();
   tree_.resize(size);
   for (size_type i = 0; i < size_; i++) {
