@@ -121,6 +121,14 @@ class fenwick {
     return (*this)[idx];
   }
 
+  /*
+   * Modifiers
+   */
+  void assign(size_type n, const value_type& val) {
+    clear();
+    resize(n, val);
+  }
+
   void clear() noexcept {
     size_ = 0;
     capacity_ = 0;
