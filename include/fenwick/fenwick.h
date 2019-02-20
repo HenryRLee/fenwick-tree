@@ -55,7 +55,7 @@ class fenwick {
   /*
    * Constructors
    */
-  fenwick() { resize(0); }
+  fenwick() { clear(); }
 
   fenwick(size_type size, const value_type& val = value_type()) {
     resize(size, val);
@@ -120,6 +120,13 @@ class fenwick {
     check_out_of_range(idx);
     return (*this)[idx];
   }
+
+  void clear() noexcept {
+    size_ = 0;
+    capacity_ = 0;
+    data_.clear();
+    tree_.clear();
+  };
 
   /*
    * Allocator
