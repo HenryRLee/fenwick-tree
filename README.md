@@ -12,17 +12,30 @@ Fenwick tree is a simple data structure to solve the problem. It balances both t
 This library provides public members similar to the `std::vector`, and updating the elements can be done through updating the lvalues from `[]` operators or (potentially) iterators. So it works like an extension of `std::vector`, with only one additional public function, which is a series of `sum` functions, to query the sum of a range in the vector.
 
 ### Examples
+Initialize the tree with a default value, and iterate the tree
+
+```
+// initialize an array with 5 elements, setting their values to 10
+fenwick<int> array(5, 10);
+
+for (auto it = array.begin(); it != array.end(); it++) {
+  assert(*it == 10);
+}
+```
+
+Update elements using the suffix operator, and get the sum of a particular range.
+
 ```cpp
-  fenwick::fenwick<int> array(5); // initiate an array with 5 elements
+fenwick::fenwick<int> array(5); // initiate an array with 5 elements
 
-  array[0] = 1;
-  array[1] = 3;
-  array[2] = 5;
-  array[3] = 7;
-  array[5] = 9;
+array[0] = 1;
+array[1] = 3;
+array[2] = 5;
+array[3] = 7;
+array[5] = 9;
 
-  assert(array.sum(3) == 9); // the sum of the first three elements
-  assert(array.sum(1, 4) == 15); // the sum of the range [1, 4)
+assert(array.sum(3) == 9); // the sum of the first three elements
+assert(array.sum(1, 4) == 15); // the sum of the range [1, 4)
 ```
 
 ### Use of library
