@@ -86,11 +86,11 @@ struct Data {
     return *this;
   }
 
-  Data& operator+(const Data& other) const {
+  Data operator+(const Data& other) const {
     return Data(*this) += other;
   }
 
-  Data& operator-(const Data& other) const {
+  Data operator-(const Data& other) const {
     return Data(*this) -= other;
   }
 };
